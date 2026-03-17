@@ -70,6 +70,83 @@
       padding-top: 0.5rem;
     }
   }
+
+  /* Modern header enhancements */
+  .header-wrapper {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background-color: rgba(var(--color-background), 0.85);
+  }
+
+  .header__menu-item {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    position: relative;
+  }
+
+  .header__menu-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: currentColor;
+    transition: width 0.3s ease, left 0.3s ease;
+  }
+
+  .header__menu-item:hover::after {
+    width: 100%;
+    left: 0;
+  }
+
+  .header__icon {
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .header__icon:hover {
+    transform: scale(1.1);
+  }
+
+  .header__heading-link:hover .header__heading-logo {
+    transform: scale(1.03);
+    transition: transform 0.3s ease;
+  }
+
+  .header__heading-logo {
+    transition: transform 0.3s ease;
+  }
+
+  .header__submenu {
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+  }
+
+  .header__submenu .list-menu__item {
+    transition: background-color 0.15s ease, padding-left 0.15s ease;
+  }
+
+  .header__submenu .list-menu__item:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+    padding-left: 0.4rem;
+  }
+
+  .cart-count-bubble {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    animation: cartBadgePop 0.3s ease;
+  }
+
+  @keyframes cartBadgePop {
+    0% { transform: scale(0); }
+    60% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
 </style>
 
 {%- style -%}
@@ -106,7 +183,7 @@
   endfor
 -%}
 
-<{% if section.settings.sticky_header_type != 'none' %}sticky-header data-sticky-type="{{ section.settings.sticky_header_type }}"{% else %}div{% endif %} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
+<{% if section.settings.sticky_header_type != 'none' %}sticky-header data-sticky-type="{{ section.settings.sticky_header_type }}"{% else %}div{% endif %} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %} twcss-shadow-md hover:twcss-shadow-lg twcss-transition-shadow twcss-duration-300">
   {%- liquid
     assign social_links = false
     assign localization_forms = false
@@ -134,9 +211,9 @@
       {%- if request.page_type == 'index' -%}
         <h1 class="header__heading">
       {%- endif -%}
-          <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
+          <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset hover:twcss-opacity-80 twcss-transition-opacity twcss-duration-200">
             {%- if settings.logo != blank -%}
-              <div class="header__heading-logo-wrapper">
+              <div class="header__heading-logo-wrapper twcss-transition-transform twcss-duration-300">
                 {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
                 {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
                 {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
@@ -152,7 +229,7 @@
                 }}
               </div>
             {%- else -%}
-              <span class="h2">{{ shop.name }}</span>
+              <span class="h2 twcss-font-bold twcss-tracking-widest twcss-uppercase twcss-text-sm">{{ shop.name }}</span>
             {%- endif -%}
           </a>
       {%- if request.page_type == 'index' -%}
@@ -174,9 +251,9 @@
       {%- if request.page_type == 'index' -%}
         <h1 class="header__heading">
       {%- endif -%}
-          <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
+          <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset hover:twcss-opacity-80 twcss-transition-opacity twcss-duration-200">
             {%- if settings.logo != blank -%}
-              <div class="header__heading-logo-wrapper">
+              <div class="header__heading-logo-wrapper twcss-transition-transform twcss-duration-300">
                 {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
                 {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
                 {% capture sizes %}(min-width: 750px) {{ settings.logo_width }}px, 50vw{% endcapture %}
@@ -192,7 +269,7 @@
                 }}
               </div>
             {%- else -%}
-              <span class="h2">{{ shop.name }}</span>
+              <span class="h2 twcss-font-bold twcss-tracking-widest twcss-uppercase twcss-text-sm">{{ shop.name }}</span>
             {%- endif -%}
           </a>
       {%- if request.page_type == 'index' -%}
